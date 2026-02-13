@@ -50,6 +50,15 @@ Tài liệu này hướng dẫn các bước trình diễn hệ thống DevSecOp
 - **Nội dung trình bày:**
     - "Sau khi phát hiện lỗi, lập trình viên sẽ tiến hành sửa lỗi theo hướng dẫn của hệ thống."
     - "Tại branch `fix/secure-app`, chúng tôi đã sử dụng cơ chế auto-escape của Jinja2 và loại bỏ mã bí mật."
+    - "Khi mã nguồn đã sạch, hệ thống sẽ tự động thực hiện các bước tiếp theo trong chu trình CD (Continuous Deployment)."
+
+## BƯỚC 7: KIỂM TRA CHU TRÌNH CD (CONTINUOUS DEPLOYMENT)
+- **Hành động:** Mở tab **Actions** trên GitHub và xem workflow của branch `fix/secure-app`.
+- **Nội dung trình bày:**
+    - "Quan sát pipeline: Sau khi các bước Scan (CI) thành công, hệ thống đã mở khóa các bước tiếp theo."
+    - "Bước **Push to Docker Hub**: Image sạch sẽ được đóng gói và đẩy lên registry tập trung."
+    - "Bước **Deploy Simulation**: Sau cùng, ứng dụng sẽ được tự động triển khai lên môi trường sản phẩm."
+    - "=> Đây chính là cốt lõi của DevSecOps: Bảo mật không còn là một rào cản, mà là một phần tích hợp sâu vào tốc độ triển khai phần mềm."
     - "Khi push code sạch, pipeline sẽ chạy vượt qua (Pass) tất cả các bước SAST, SCA, DAST và sẵn sàng cho việc deployment."
 
 ## BƯỚC 7: KẾT LUẬN CUỐI CÙNG
