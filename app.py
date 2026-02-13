@@ -25,8 +25,6 @@ HTML_TEMPLATE = """
             <button type="submit">Search</button>
         </form>
         <p class="warning">Warning: This app is intentionally vulnerable for security demo.</p>
-        <hr>
-        <p>Try RCE demo: <a href="/eval?cmd=1+1">/eval?cmd=1+1</a></p>
     </div>
 </body>
 </html>
@@ -38,21 +36,21 @@ def home():
 
 @app.route("/search")
 def search():
-    # LỖI BẢO MẬT: REFLECTED XSS
+    # --- VULNERABILITY DEMO START ---
+    
+    # LỖI BẢO MẬT: REFLECTED XSS (Cố ý)
+    # Mô tả: Dữ liệu người dùng từ query parameter 'q' được render trực tiếp vào HTML mà không qua escape.
+    # Mục tiêu: Để công cụ SAST (Semgrep) và DAST (OWASP ZAP) có thể phát hiện.
     q = request.args.get("q", "")
-    return f"<html><body><h1>Results for: {q}</h1><a href='/'>Back</a></body></html>"
+    
+    # HARDCODED SECRET (Cố ý)
+    # Mô tả: Một chuỗi giả lập API Key của AWS để kiểm tra tính năng Secret Scanning.
+    # Mục tiêu: Để công cụ SCA/Secret Scanning (Trivy/Github Secrets) có thể bắt được.
+    secret_key = "AWS_AKIA_EXAMPLE_KEY_123456" 
+    
+    # --- VULNERABILITY DEMO END ---
 
-@app.route("/eval")
-def dangerous_eval():
-    # LỖI BẢO MẬT: REMOTE CODE EXECUTION (RCE)
-    cmd = request.args.get("cmd", "")
-    try:
-        # HARDCODED SECRET để demo Secret Scanning
-        secret_key = "AWS_AKIA_EXAMPLE_KEY_123456" 
-        result = eval(cmd)
-        return f"Result: {result} (Secret: {secret_key})"
-    except Exception as e:
-        return f"Error: {e}"
+    return f"<html><body><h1>Results for: {q}</h1><p style='display:none'>Debug Info: {secret_key}</p><a href='/'>Back</a></body></html>"
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)

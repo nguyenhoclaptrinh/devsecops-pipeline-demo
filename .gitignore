@@ -1,6 +1,13 @@
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
 venv/
-env/
 .env
-.DS_Store
+.flaskenv
+instance/
+.pytest_cache/
+.coverage
+htmlcov/
+.vscode/
+.idea/
+*.log
