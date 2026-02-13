@@ -23,11 +23,10 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: SAST - Semgrep Analysis
-        # Semgrep cài đặt nhanh và dễ cấu hình hơn CodeQL cho Python
-        continue-on-error: true
-        run: |
-          pip install semgrep
-          semgrep scan --config=auto --error --strict . || true
+        # Use official semgrep action (pinned) for stability and clearer logs
+        uses: returntocorp/semgrep-action@v1
+        with:
+          args: --config=auto --strict --verbose
 
       - name: SCA - Trivy FS (Check Libraries)
         uses: aquasecurity/trivy-action@master
