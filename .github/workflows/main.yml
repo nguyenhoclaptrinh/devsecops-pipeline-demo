@@ -1,0 +1,73 @@
+name: DevSecOps Flask Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: SAST - Semgrep Analysis
+        # Semgrep cài đặt nhanh và dễ cấu hình hơn CodeQL cho Python
+        run: |
+          pip install semgrep
+          semgrep scan --config=auto --error --strict . 
+
+      - name: SCA - Trivy FS (Check Libraries)
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          ignore-unfixed: true
+          format: 'table'
+          severity: 'CRITICAL,HIGH'
+          exit-code: '0' # Warning only để không block demo
+
+  docker-build-scan:
+    needs: security-scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker Image
+        run: docker build -t devsecops-flask:latest .
+
+      - name: Container Security - Trivy Image Scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'devsecops-flask:latest'
+          format: 'table'
+          ignore-unfixed: true
+          severity: 'CRITICAL,HIGH'
+          exit-code: '0' # Warning only
+
+  dast-scan:
+    needs: docker-build-scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run App in Docker
+        run: |
+          docker build -t devsecops-flask:latest .
+          docker run -d -p 5000:5000 --name flask-app devsecops-flask:latest
+          sleep 10 # Đợi app khởi động
+
+      - name: DAST - OWASP ZAP Baseline Scan
+        uses: zaproxy/action-baseline@v0.12.0
+        with:
+          target: 'http://localhost:5000'
+          fail_action: false
