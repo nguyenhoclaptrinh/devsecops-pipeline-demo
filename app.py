@@ -36,21 +36,25 @@ def home():
 
 @app.route("/search")
 def search():
-    # --- VULNERABILITY DEMO START ---
+    # --- PHIÊN BẢN ĐÃ FIX LỖI BẢO MẬT ---
     
-    # LỖI BẢO MẬT: REFLECTED XSS (Cố ý)
-    # Mô tả: Dữ liệu người dùng từ query parameter 'q' được render trực tiếp vào HTML mà không qua escape.
-    # Mục tiêu: Để công cụ SAST (Semgrep) và DAST (OWASP ZAP) có thể phát hiện.
+    # FIX LỖI XSS: Sử dụng render_template_string với escape hợp lý hoặc template engine
+    # Ở đây Flask's f-string trong HTML là nguy hiểm, ta nên dùng render_template_string với biến truyền vào
     q = request.args.get("q", "")
     
-    # HARDCODED SECRET (Cố ý)
-    # Mô tả: Một chuỗi giả lập API Key của AWS để kiểm tra tính năng Secret Scanning.
-    # Mục tiêu: Để công cụ SCA/Secret Scanning (Trivy/Github Secrets) có thể bắt được.
-    secret_key = "AWS_AKIA_EXAMPLE_KEY_123456" 
-    
-    # --- VULNERABILITY DEMO END ---
+    # KHÔNG CÒN HARDCODED SECRET
+    # Secret key nên được đọc từ Environment Variable (biến môi trường)
+    # import os
+    # api_key = os.getenv("AWS_API_KEY")
 
-    return f"<html><body><h1>Results for: {q}</h1><p style='display:none'>Debug Info: {secret_key}</p><a href='/'>Back</a></body></html>"
+    return render_template_string("""
+        <html>
+            <body>
+                <h1>Results for: {{ query }}</h1>
+                <a href='/'>Back</a>
+            </body>
+        </html>
+    """, query=q)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)

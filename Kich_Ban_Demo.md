@@ -36,6 +36,16 @@ Tài liệu này hướng dẫn các bước trình diễn hệ thống DevSecOp
 - **Nội dung trình bày:**
     - "GitHub cung cấp một bảng điều khiển tập trung cho các cảnh báo bảo mật. Tại đây, chúng ta có thể thấy chi tiết vị trí dòng code bị lỗi và hướng dẫn khắc phục."
 
-## BƯỚC 5: KẾT LUẬN
+## BƯỚC 6: TRÌNH DIỄN LUỒNG THÀNH CÔNG (SECURE FLOW)
+- **Hành động:** 
+    1. Chuyển sang branch `fix/secure-app`.
+    2. Cho xem code đã được fix (dùng Jinja2 template để chống XSS, xóa secret).
+    3. Thực hiện Push branch này lên.
 - **Nội dung trình bày:**
-    - "Hệ thống đã hoàn thành tốt nhiệm vụ: Tự động hóa việc kiểm tra, phát hiện lỗi sớm và ngăn chặn rủi ro trước khi ứng dụng được triển khai thực tế."
+    - "Sau khi phát hiện lỗi, lập trình viên sẽ tiến hành sửa lỗi theo hướng dẫn của hệ thống."
+    - "Tại branch `fix/secure-app`, chúng tôi đã sử dụng cơ chế auto-escape của Jinja2 và loại bỏ mã bí mật."
+    - "Khi push code sạch, pipeline sẽ chạy vượt qua (Pass) tất cả các bước SAST, SCA, DAST và sẵn sàng cho việc deployment."
+
+## BƯỚC 7: KẾT LUẬN CUỐI CÙNG
+- **Nội dung trình bày:**
+    - "DevSecOps không chỉ là để 'chặn', mà là để tạo ra một chu kỳ phản hồi nhanh, giúp phần mềm trở nên an toàn hơn một cách bền vững."
