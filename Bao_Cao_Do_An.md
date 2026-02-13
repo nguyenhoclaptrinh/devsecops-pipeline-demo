@@ -18,8 +18,8 @@ Hệ thống sử dụng GitHub Actions làm bộ điều phối chính (Orchest
 
 ## CHƯƠNG 3: TRIỂN KHAI THỰC NGHIỆM
 ### 3.1. Cấu hình SAST & SCA
-Sử dụng **Semgrep** để quét mã nguồn Python tìm các lỗi như `eval()`, `exec()`, XSS.
-Sử dụng **Trivy** để quét các thư viện cũ.
+Sử dụng **Semgrep** để quét mã nguồn Python tìm các lỗi như XSS, lộ lọt Secret Key.
+Sử dụng **Trivy** để quét thư viện và container image.
 ### 3.2. Cấu hình DAST
 Thiết lập ZAP quét ứng dụng Flask chạy trên Docker tại `http://localhost:5000`.
 ### 3.3. Dockerization
