@@ -42,8 +42,11 @@ Tài liệu này hướng dẫn các bước trình diễn hệ thống DevSecOp
     2. Cho xem code đã được fix:
         - Sử dụng `render_template("search.html")` thay vì `render_template_string` để tận dụng cơ chế auto-escape của Jinja2.
         - Xóa bỏ **Hardcoded Secret**.
-        - Đổi host từ `0.0.0.0` thành `127.0.0.1` để tuân thủ quy tắc bảo mật mạng.
-    3. Thực hiện Push branch này lên.
+        - Đổi host từ `0.0.0.0` thành `127.0.0.1`.
+    3. Cho xem **Dockerfile** đã được tối ưu:
+        - Sử dụng lệnh `chown` để đảm bảo user non-root sở hữu mã nguồn (Hardening).
+        - Thêm `HEALTHCHECK` giúp hệ thống tự giám sát trạng thái container.
+    4. Thực hiện Push branch này lên.
 - **Nội dung trình bày:**
     - "Sau khi phát hiện lỗi, lập trình viên sẽ tiến hành sửa lỗi theo hướng dẫn của hệ thống."
     - "Tại branch `fix/secure-app`, chúng tôi đã sử dụng cơ chế auto-escape của Jinja2 và loại bỏ mã bí mật."
