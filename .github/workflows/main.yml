@@ -103,16 +103,4 @@ jobs:
           push: ${{ secrets.DOCKER_USERNAME != '' }}
           tags: ${{ github.repository_owner }}/devsecops-flask:latest
 
-  deploy-simulation:
-    name: 🌐 CD - Deploy Simulation
-    needs: push-to-dockerhub
-    if: success()
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploying to Staging/Production
-        run: |
-          echo "🚀 Starting Deployment Process..."
-          echo "✅ All security checks passed (SAST, SCA, DAST, Image Scan)."
-          echo "📦 Pulling image: ${{ github.repository_owner }}/devsecops-flask:latest"
-          echo "🏗️ Container is being deployed to the secure environment..."
-          echo "🎉 Deployment Successful!"
+
