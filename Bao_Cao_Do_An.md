@@ -26,10 +26,10 @@ Thiết lập ZAP quét ứng dụng Flask chạy trên Docker tại `http://loc
 Xây dựng Docker image chuẩn (multistage build) và lưu trữ trên Docker Hub.
 
 ## CHƯƠNG 4: KẾT QUẢ VÀ THẢO LUẬN
-### 4.1. Khả năng phát hiện lỗi
-- **SAST:** Phát hiện lỗi sử dụng hàm `eval()` và lộ mã bí mật (Secret).
-- **SCA:** Phát hiện các thư viện lỗi thời có mã CVE cao.
-- **DAST:** Phát hiện các thiếu sót về Security Headers.
+### 4.1. Khả năng phát hiện lỗi thực tế
+- **SAST (Semgrep):** Đã phát hiện chính xác lỗi **Reflected XSS** (do render biến `q` trực tiếp) và **Hardcoded Secret** (mã AWS API Key) trong `app.py`.
+- **SCA (Trivy):** Phân tích file `requirements.txt` và phát hiện rủi ro bảo mật trong các thư viện phụ thuộc.
+- **DAST (OWASP ZAP):** Phân tích ứng dụng khi đang chạy để tìm các lỗ hổng runtime và Security Headers.
 ### 4.2. Kết quả Pipeline
 Mọi kết quả được tổng hợp tự động tại tab **Security** của GitHub.
 
