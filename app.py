@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 # LỖI BẢO MẬT 1: HARDCODED SECRET (Cố ý)
 # HƯỚNG DẪN FIX: Comment hoặc xóa dòng bên dưới
-API_KEY = "AKIA-EXAMPLE-1234567890-SECRET"
+# API_KEY = "AKIA-EXAMPLE-1234567890-SECRET"
 
 @app.route("/")
 def home():
@@ -16,12 +16,11 @@ def search():
 
     # --- CHỌN 1 TRONG 2 LUỒNG DƯỚI ĐÂY ĐỂ DEMO ---
 
-    # LUỒNG 1: LỖI BẢO MẬT XSS (Đang kích hoạt)
-    # HƯỚNG DẪN FIX: Comment 2 dòng bên dưới và bỏ comment LUỒNG 2
-    return render_template_string(f"<h1>Results for: {q}</h1><a href='/'>Back</a>")
+    # LUỒNG 1: LỖI BẢO MẬT XSS (Đã tắt sau khi fix)
+    # return render_template_string(f"<h1>Results for: {q}</h1><a href='/'>Back</a>")
 
-    # LUỒNG 2: PHIÊN BẢN AN TOÀN (Đang bị tắt)
-    # return render_template("search.html", query=q)
+    # LUỒNG 2: PHIÊN BẢN AN TOÀN (Đã kích hoạt sau khi fix)
+    return render_template("search.html", query=q)
 
 if __name__ == "__main__":
     # Lưu ý: host 127.0.0.1 là an toàn, 0.0.0.0 sẽ bị Semgrep cảnh báo
