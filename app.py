@@ -4,7 +4,8 @@ app = Flask(__name__)
 
 # LỖI BẢO MẬT 1: HARDCODED SECRET (Cố ý)
 # HƯỚNG DẪN FIX: Comment hoặc xóa dòng bên dưới
-API_KEY = "AKIA-EXAMPLE-1234567890-SECRET"
+AWS_ACCESS_KEY_ID = "AKIAIOSFODNN7EXAMPLE"
+AWS_SECRET_ACCESS_KEY = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
 
 @app.route("/")
 def home():

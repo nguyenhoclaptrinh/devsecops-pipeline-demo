@@ -26,7 +26,7 @@ jobs:
         # Semgrep cài đặt nhanh và dễ cấu hình hơn CodeQL cho Python
         run: |
           pip install semgrep
-          semgrep scan --config=auto --error . 
+          semgrep scan --config p/python --config p/secrets --config p/flask --error . 
 
       - name: SCA - Trivy FS (Check Libraries)
         uses: aquasecurity/trivy-action@master
