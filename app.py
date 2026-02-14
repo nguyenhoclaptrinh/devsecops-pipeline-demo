@@ -1,8 +1,11 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, render_template_string
 
 app = Flask(__name__)
 
-# --- BẢN SẠCH (SECURE VERSION) ---
+# LỖI BẢO MẬT 1: HARDCODED SECRET (Cố ý)
+# HƯỚNG DẪN FIX: Comment hoặc xóa 2 dòng bên dưới
+AWS_ACCESS_KEY_ID = "AKIAIOSFODNN7EXAMPLE"
+AWS_SECRET_ACCESS_KEY = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
 
 @app.route("/")
 def home():
@@ -10,14 +13,16 @@ def home():
 
 @app.route("/search")
 def search():
-    # FIX LỖI XSS: Sử dụng cơ chế auto-escape của Jinja2 khi dùng render_template
     q = request.args.get("q", "")
-    
-    # KHÔNG CÒN HARDCODED SECRET
-    # Dữ liệu nhạy cảm thực tế nên được lưu ở biến môi trường hoặc Vault
 
-    return render_template("search.html", query=q)
+    # --- CHỌN 1 TRONG 2 LUỒNG DƯỚI ĐÂY ĐỂ DEMO ---
+
+    # LUỒNG 1: LỖI BẢO MẬT XSS (Đang kích hoạt)
+    # HƯỚNG DẪN FIX: Comment dòng bên dưới và bỏ comment LUỒNG 2
+    return render_template_string(f"<h1>Results for: {q}</h1><a href='/'>Back</a>")
+
+    # LUỒNG 2: PHIÊN BẢN AN TOÀN (Đang bị tắt)
+    # return render_template("search.html", query=q)
 
 if __name__ == "__main__":
-    # Thay đổi host sang 127.0.0.1 để đảm bảo an toàn cục bộ
     app.run(host="127.0.0.1", port=5000)
