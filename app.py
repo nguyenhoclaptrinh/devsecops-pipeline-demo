@@ -14,10 +14,10 @@ def search():
 
     # LUỒNG 1: LỖI BẢO MẬT XSS 
     # HƯỚNG DẪN FIX: Comment dòng bên dưới và bỏ comment LUỒNG 2
-    return render_template_string(f"<h1>Results for: {q}</h1><a href='/'>Back</a>")
+    # return render_template_string(f"<h1>Results for: {q}</h1><a href='/'>Back</a>")
 
     # LUỒNG 2: PHIÊN BẢN AN TOÀN
-    # return render_template("search.html", query=q)
+    return render_template("search.html", query=q)
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=5000)
