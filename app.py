@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 # LỖI BẢO MẬT 1: HARDCODED SECRET (Cố ý)
 # HƯỚNG DẪN FIX: Comment hoặc xóa dòng bên dưới
-# API_KEY = "AKIA-EXAMPLE-1234567890-SECRET"
+API_KEY = "AKIA-EXAMPLE-1234567890-SECRET"
 
 @app.route("/")
 def home():
